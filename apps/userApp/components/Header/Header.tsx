@@ -14,7 +14,14 @@ export function Header() {
 	const colorScheme = useColorScheme();
 	return (
 		<View style={styles.container}>
-			<View style={{ flexDirection: 'row', marginTop: 18, padding: 8 }}>
+			<View
+				style={{
+					flexDirection: 'row',
+					marginTop: 18,
+					padding: 8,
+					paddingHorizontal: 3,
+				}}
+			>
 				<View
 					style={[
 						styles.profileIcon,
