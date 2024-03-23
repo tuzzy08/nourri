@@ -27,8 +27,10 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-	const location = useBoundStore((state) => state.userPosition);
-	const setLocation = useBoundStore((state) => state.setLocation);
+	const location = useBoundStore((state) => state.userLocation);
+	const setUserLocation = useBoundStore((state) => state.setUserLocation);
+	const setCurrentAddress = useBoundStore((state) => state.setCurrentAddress);
+
 	const [loaded, error] = useFonts({
 		SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
 		...FontAwesome.font,
@@ -56,8 +58,19 @@ export default function RootLayout() {
 				coords: { longitude, latitude },
 			} = await Location.getCurrentPositionAsync({});
 			const location = { longitude, latitude };
-			console.log(location);
-			setLocation(location);
+			setUserLocation(location);
+
+			const google_map_api_url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&location_type=ROOFTOP&result_type=street_address&key=${process.env.EXPO_PUBLIC_GOOGLE_API_KEY}`;
+			const response = await fetch(google_map_api_url);
+			const json = await response.json();
+			const address = json.results[0].formatted_address;
+			setCurrentAddress(address);
+
+			// setLocation(location);
+			// const address = await Location.reverseGeocodeAsync(location, {
+			// 	useGoogleMaps: true,
+			// });
+			// console.log('🚀 ~ address:', address);
 		})();
 	}, []);
 

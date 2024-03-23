@@ -1,14 +1,17 @@
 import { create, StateCreator } from 'zustand';
 
 interface UserLocationSlice {
-	userPosition: {
+	userLocation: {
 		longitude: number;
 		latitude: number;
 	};
 	userGeoHash: string;
 	currentAddress: string;
 	deliveryAddress: string;
-	setLocation: (coordinates: { longitude: number; latitude: number }) => void;
+	setUserLocation: (coordinates: {
+		longitude: number;
+		latitude: number;
+	}) => void;
 	setGeoHash: (geoHash: string) => void;
 	setCurrentAddress: (address: string) => void;
 	setDeliveryAddress: (address: string) => void;
@@ -36,17 +39,17 @@ const createLocationSlice: StateCreator<
 	[],
 	UserLocationSlice
 > = (set) => ({
-	userPosition: {
-		longitude: 0,
-		latitude: 0,
+	userLocation: {
+		longitude: 6.4,
+		latitude: 5.3,
 	},
 	userGeoHash: '',
 	currentAddress: '',
 	deliveryAddress: '',
-	setLocation: (coordinates: { longitude: number; latitude: number }) =>
+	setUserLocation: (coordinates: { longitude: number; latitude: number }) =>
 		set((state) => ({
-			userPosition: {
-				...state.userPosition,
+			userLocation: {
+				...state.userLocation,
 				...coordinates,
 			},
 		})),

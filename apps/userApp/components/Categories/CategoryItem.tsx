@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
 		gap: 2,
 	},
 	itemImage: {
-		height: 55,
-		width: 55,
+		height: 50,
+		width: 50,
 		borderRadius: 50,
 		backgroundColor: Colors.grey,
 		elevation: 3,

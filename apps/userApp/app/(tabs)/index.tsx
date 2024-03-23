@@ -14,7 +14,9 @@ export default function Page() {
 				showsVerticalScrollIndicator={false}
 			>
 				<View style={{ flex: 1 }}>
-					<CategoryList />
+					<View style={{ marginTop: -2 }}>
+						<CategoryList />
+					</View>
 				</View>
 			</ScrollView>
 		</SafeAreaView>
