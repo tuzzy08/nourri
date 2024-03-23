@@ -14,7 +14,7 @@ export function Header() {
 	const colorScheme = useColorScheme();
 	return (
 		<View style={styles.container}>
-			<View style={{ flexDirection: 'row', marginTop: 15, padding: 8 }}>
+			<View style={{ flexDirection: 'row', marginTop: 18, padding: 8 }}>
 				<View
 					style={[
 						styles.profileIcon,
@@ -27,7 +27,7 @@ export function Header() {
 				{/* <TouchableOpacity> */}
 				<Link href={'/notifications'} asChild>
 					<Bell
-						size={22}
+						size={24}
 						style={{ alignSelf: 'flex-end' }}
 						color={Colors.primary}
 					/>
@@ -41,7 +41,7 @@ export function Header() {
 
 const styles = StyleSheet.create({
 	container: {
-		height: hp('14%'),
+		height: hp('13%'),
 		// backgroundColor: Colors.primary,
 		justifyContent: 'center',
 	},

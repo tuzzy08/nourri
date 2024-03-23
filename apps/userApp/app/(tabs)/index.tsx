@@ -3,18 +3,18 @@ import { ScrollView, StyleSheet } from 'react-native';
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
 import { SafeAreaView } from 'react-native';
+import { CategoryItem } from '@/components/Categories/CategoryItem';
+import { CategoryList } from '@/components/Categories/CategoryList';
 
 export default function Page() {
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
-			<ScrollView style={{}}>
-				<View style={styles.container}>
-					<Text style={styles.title}>Tab One</Text>
-					<View
-						style={styles.separator}
-						lightColor='#eee'
-						darkColor='rgba(255,255,255,0.1)'
-					/>
+			<ScrollView
+				contentContainerStyle={styles.container}
+				showsVerticalScrollIndicator={false}
+			>
+				<View style={{ flex: 1 }}>
+					<CategoryList />
 				</View>
 			</ScrollView>
 		</SafeAreaView>
@@ -23,9 +23,9 @@ export default function Page() {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'center',
+		flexGrow: 1,
+		// alignItems: 'center',
+		// justifyContent: 'center',
 	},
 	title: {
 		fontSize: 20,
