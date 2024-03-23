@@ -9,10 +9,7 @@ export function LocationBar() {
 		<View style={styles.container}>
 			<TouchableOpacity>
 				<View style={styles.addressBox}>
-					<MapPin
-						size={12}
-						color={colorScheme === 'dark' ? Colors.primary : Colors.light.text}
-					/>
+					<MapPin size={12} color={Colors.primary} />
 					<Text style={styles.addressText}>#3 Joshua Close,</Text>
 					<ChevronDown
 						size={19}

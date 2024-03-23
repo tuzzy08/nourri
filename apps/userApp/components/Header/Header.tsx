@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
 import { View, Text } from '@/components/Themed';
 import {
 	widthPercentageToDP as wp,
@@ -11,17 +11,25 @@ import { Bell } from 'lucide-react-native';
 import { Link } from 'expo-router';
 
 export function Header() {
+	const colorScheme = useColorScheme();
 	return (
 		<View style={styles.container}>
 			<View style={{ flexDirection: 'row', marginTop: 15, padding: 8 }}>
-				<View style={styles.profileIcon} />
+				<View
+					style={[
+						styles.profileIcon,
+						{
+							backgroundColor: colorScheme === 'dark' ? '#FFF' : Colors.primary,
+						},
+					]}
+				/>
 				<LocationBar />
 				{/* <TouchableOpacity> */}
 				<Link href={'/notifications'} asChild>
 					<Bell
 						size={22}
 						style={{ alignSelf: 'flex-end' }}
-						color={Colors.lightGrey}
+						color={Colors.primary}
 					/>
 				</Link>
 
@@ -41,6 +49,5 @@ const styles = StyleSheet.create({
 		width: 28,
 		height: 28,
 		borderRadius: 30,
-		backgroundColor: '#FFF',
 	},
 });
