@@ -29,7 +29,7 @@ export function Header() {
 					<Bell
 						size={24}
 						style={{ alignSelf: 'flex-end' }}
-						color={Colors.primary}
+						color={Colors.secondary}
 					/>
 				</Link>
 
