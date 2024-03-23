@@ -1,14 +1,14 @@
-import { create, StateCreator,  } from 'zustand';
+import { create, StateCreator } from 'zustand';
 
 interface UserLocationSlice {
 	userPosition: {
-		longitude: string;
-		latitude: string;
+		longitude: number;
+		latitude: number;
 	};
 	userGeoHash: string;
 	currentAddress: string;
 	deliveryAddress: string;
-	setPosition: (coordinates: { longitude: string; latitude: string }) => void;
+	setLocation: (coordinates: { longitude: number; latitude: number }) => void;
 	setGeoHash: (geoHash: string) => void;
 	setCurrentAddress: (address: string) => void;
 	setDeliveryAddress: (address: string) => void;
@@ -37,13 +37,13 @@ const createLocationSlice: StateCreator<
 	UserLocationSlice
 > = (set) => ({
 	userPosition: {
-		longitude: '',
-		latitude: '',
+		longitude: 0,
+		latitude: 0,
 	},
 	userGeoHash: '',
 	currentAddress: '',
 	deliveryAddress: '',
-	setPosition: (coordinates: { longitude: string; latitude: string }) =>
+	setLocation: (coordinates: { longitude: number; latitude: number }) =>
 		set((state) => ({
 			userPosition: {
 				...state.userPosition,
@@ -60,46 +60,53 @@ const createLocationSlice: StateCreator<
 const creatCartSlice: StateCreator<CartSlice, [], [], CartSlice> = (set) => ({
 	items: [],
 	addItem: (item: CartItem) =>
-		set(state => ({
+		set((state) => ({
 			items: [...state.items, item],
 		})),
 	deleteItem: (itemId: string) =>
-		set(state => {
-			const updatedItems = [...state.items.filter((item, i) => item.itemId !== itemId)];
+		set((state) => {
+			const updatedItems = [
+				...state.items.filter((item, i) => item.itemId !== itemId),
+			];
 			return {
-				items: [...updatedItems]
+				items: [...updatedItems],
 			};
 		}),
-	increaseItemQty: (itemId: string) => set(state => {
-		// Fetch the item from array in state
-		const item = state.items.find((item) => item.itemId === itemId);
+	increaseItemQty: (itemId: string) =>
+		set((state) => {
+			// Fetch the item from array in state
+			const item = state.items.find((item) => item.itemId === itemId);
 
-		if(!item || (item?.itemQty < 0)) return {}
-		// Update it's quantity
-		item.itemQty += 1;
-		return {
-			// Filter out the item and merge in the updated item
-			items: [...state.items.filter((item) => item.itemId !== itemId), item]
-		}
-	}),
-	decreaseItemQty: (itemId: string) => set(state => {
-		// Fetch the item from array in state
-		const item = state.items.find((item) => item.itemId === itemId);
+			if (!item || item?.itemQty < 0) return {};
+			// Update it's quantity
+			item.itemQty += 1;
+			return {
+				// Filter out the item and merge in the updated item
+				items: [...state.items.filter((item) => item.itemId !== itemId), item],
+			};
+		}),
+	decreaseItemQty: (itemId: string) =>
+		set((state) => {
+			// Fetch the item from array in state
+			const item = state.items.find((item) => item.itemId === itemId);
 
-		if(!item || (item?.itemQty <= 0 )) return {}
-		// Update it's quantity
-		item.itemQty -= 1;
-		return {
-			// Filter out the item and merge in the updated item
-			items: [...state.items.filter((item) => item.itemId !== itemId), item]
-		}
-	}),
-	clearCart: () => set((state) => ({
-		items: []
-	})),
+			if (!item || item?.itemQty <= 0) return {};
+			// Update it's quantity
+			item.itemQty -= 1;
+			return {
+				// Filter out the item and merge in the updated item
+				items: [...state.items.filter((item) => item.itemId !== itemId), item],
+			};
+		}),
+	clearCart: () =>
+		set((state) => ({
+			items: [],
+		})),
 });
 
-const useBoundStore = create<UserLocationSlice & CartSlice>()((...a) => ({
-	...createLocationSlice(...a),
-	...creatCartSlice(...a)
-}))
+export const useBoundStore = create<UserLocationSlice & CartSlice>()(
+	(...a) => ({
+		...createLocationSlice(...a),
+		...creatCartSlice(...a),
+	})
+);

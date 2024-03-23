@@ -10,7 +10,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useColorScheme } from '@/components/useColorScheme';
-// import '@/global.css';
+import * as Location from 'expo-location';
+import { useBoundStore } from '@/store/store';
 
 export {
 	// Catch any errors thrown by the Layout component.
@@ -26,6 +27,8 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+	const location = useBoundStore((state) => state.userPosition);
+	const setLocation = useBoundStore((state) => state.setLocation);
 	const [loaded, error] = useFonts({
 		SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
 		...FontAwesome.font,
@@ -41,6 +44,22 @@ export default function RootLayout() {
 			SplashScreen.hideAsync();
 		}
 	}, [loaded]);
+	useEffect(() => {
+		(async () => {
+			let { status } = await Location.requestForegroundPermissionsAsync();
+			if (status !== 'granted') {
+				// setErrorMsg('Permission to access location was denied');
+				return;
+			}
+
+			let {
+				coords: { longitude, latitude },
+			} = await Location.getCurrentPositionAsync({});
+			const location = { longitude, latitude };
+			console.log(location);
+			setLocation(location);
+		})();
+	}, []);
 
 	if (!loaded) {
 		return null;
