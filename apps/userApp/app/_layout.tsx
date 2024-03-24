@@ -12,6 +12,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useColorScheme } from '@/components/useColorScheme';
 import * as Location from 'expo-location';
 import { useBoundStore } from '@/store/store';
+import { getAddressFromCoordinates } from '@/lib';
 
 export {
 	// Catch any errors thrown by the Layout component.
@@ -27,9 +28,7 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-	const location = useBoundStore((state) => state.userLocation);
 	const setUserLocation = useBoundStore((state) => state.setUserLocation);
-	const setCurrentAddress = useBoundStore((state) => state.setCurrentAddress);
 
 	const [loaded, error] = useFonts({
 		SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -53,24 +52,19 @@ export default function RootLayout() {
 				// setErrorMsg('Permission to access location was denied');
 				return;
 			}
-
+			//  Get user's current location
 			let {
 				coords: { longitude, latitude },
 			} = await Location.getCurrentPositionAsync({});
 			const location = { longitude, latitude };
 			setUserLocation(location);
 
-			const google_map_api_url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&location_type=ROOFTOP&result_type=street_address&key=${process.env.EXPO_PUBLIC_GOOGLE_API_KEY}`;
-			const response = await fetch(google_map_api_url);
-			const json = await response.json();
-			const address = json.results[0].formatted_address;
-			setCurrentAddress(address);
-
-			// setLocation(location);
-			// const address = await Location.reverseGeocodeAsync(location, {
-			// 	useGoogleMaps: true,
-			// });
+			/**
+			 * ! This call is billed on google, use Sparingly or use the MapBox API in development.
+			 */
+			// const address = await getAddressFromCoordinates(location);
 			// console.log('🚀 ~ address:', address);
+			// setCurrentAddress(address);
 		})();
 	}, []);
 

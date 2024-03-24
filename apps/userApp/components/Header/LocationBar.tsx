@@ -4,6 +4,7 @@ import { MapPin, ChevronDown } from 'lucide-react-native';
 import { router } from 'expo-router';
 import Colors from '@/constants/Colors';
 import { useBoundStore } from '@/store/store';
+import { wrapString } from '@/lib';
 
 export function LocationBar() {
 	const colorScheme = useColorScheme();
@@ -15,7 +16,9 @@ export function LocationBar() {
 			<TouchableOpacity onPress={() => router.navigate('/mapPage')}>
 				<View style={styles.addressBox}>
 					<MapPin size={12} color={Colors.secondary} />
-					<Text style={styles.addressText}>{summarizedAddress}</Text>
+					<Text
+						style={styles.addressText}
+					>{`#3 Joshua Close, Nvigwe Woji`}</Text>
 					<ChevronDown
 						size={19}
 						color={
@@ -27,14 +30,6 @@ export function LocationBar() {
 			</TouchableOpacity>
 		</View>
 	);
-}
-
-function wrapString(input: string): string {
-	const maxLength = 29;
-	if (input.length > maxLength) {
-		return input.substring(0, maxLength - 3) + '...';
-	}
-	return input;
 }
 
 const styles = StyleSheet.create({

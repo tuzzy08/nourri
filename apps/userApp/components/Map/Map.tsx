@@ -1,7 +1,5 @@
 import { StyleSheet } from 'react-native';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-
-import { Text, View } from '@/components/Themed';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 export function Map({
 	initialCoords,
@@ -20,8 +18,17 @@ export function Map({
 				longitudeDelta: 0.0421,
 			}}
 			style={style}
-			showsUserLocation
-		/>
+			// showsUserLocation
+		>
+			<Marker
+				draggable
+				coordinate={{
+					latitude: initialCoords.latitude,
+					longitude: initialCoords.longitude,
+				}}
+				onDragEnd={(e) => console.log(e.nativeEvent.coordinate)}
+			/>
+		</MapView>
 	);
 }
 

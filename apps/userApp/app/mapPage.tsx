@@ -7,10 +7,12 @@ import {
 	heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import { useBoundStore } from '@/store/store';
+import { getAddressFromCoordinates } from '@/lib';
 
 export default function Page() {
 	const userLocation = useBoundStore((state) => state.userLocation);
 	const setUserLocation = useBoundStore((state) => state.setUserLocation);
+
 	useEffect(() => {
 		(async () => {
 			let { status } = await Location.requestForegroundPermissionsAsync();
@@ -18,19 +20,17 @@ export default function Page() {
 				// setErrorMsg('Permission to access location was denied');
 				return;
 			}
-
+			// Get User's current location
 			let {
 				coords: { longitude, latitude },
 			} = await Location.getCurrentPositionAsync({});
 			const location = { longitude, latitude };
-			console.log(location);
 			setUserLocation(location);
-
-			// setLocation(location);
-			// const address = await Location.reverseGeocodeAsync(location, {
-			// 	useGoogleMaps: true,
-			// });
-			// console.log('🚀 ~ address:', address);
+			/**
+			 * ! This call is billed on google, use Sparingly or use the MapBox API in development.
+			 */
+			// Get Address from location
+			// const address = await getAddressFromCoordinates(location);
 		})();
 	}, []);
 	return (

@@ -1,10 +1,9 @@
 import { ScrollView, StyleSheet } from 'react-native';
-
-import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
 import { SafeAreaView } from 'react-native';
-import { CategoryItem } from '@/components/Categories/CategoryItem';
 import { CategoryList } from '@/components/Categories/CategoryList';
+import { Banner } from '@/components/Banner';
+import { ForYou } from '@/components/ForYou';
 
 export default function Page() {
 	return (
@@ -17,6 +16,15 @@ export default function Page() {
 					<View style={{ marginTop: -2 }}>
 						<CategoryList />
 					</View>
+					<View style={styles.banner}>
+						<Banner />
+					</View>
+					<View style={styles.foryou}>
+						<View style={{}}>
+							<Text style={styles.foryouHeaderText}>For You</Text>
+						</View>
+						<ForYou />
+					</View>
 				</View>
 			</ScrollView>
 		</SafeAreaView>
@@ -26,16 +34,22 @@ export default function Page() {
 const styles = StyleSheet.create({
 	container: {
 		flexGrow: 1,
-		// alignItems: 'center',
-		// justifyContent: 'center',
 	},
 	title: {
 		fontSize: 20,
 		fontWeight: 'bold',
 	},
-	separator: {
-		marginVertical: 30,
-		height: 1,
-		width: '80%',
+
+	banner: {
+		alignItems: 'center',
+	},
+	foryou: {
+		marginTop: 25,
+		marginLeft: 6,
+		gap: 7,
+	},
+	foryouHeaderText: {
+		fontSize: 16,
+		fontWeight: '600',
 	},
 });

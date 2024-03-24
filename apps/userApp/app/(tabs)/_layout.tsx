@@ -1,14 +1,8 @@
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable, StyleSheet } from 'react-native';
-import {
-	Home,
-	ClipboardList,
-	Search,
-	User,
-	CircleUser,
-} from 'lucide-react-native';
+import { Tabs } from 'expo-router';
+import { StyleSheet } from 'react-native';
+import { Home, ClipboardList, Search, User } from 'lucide-react-native';
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
