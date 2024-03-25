@@ -15,7 +15,6 @@ export function CategoryItem({ item }: { item: CategoryItem }) {
 		<TouchableOpacity>
 			<View style={styles.itemContainer}>
 				<Image source={item.imgUrl} style={styles.itemImage} />
-
 				<Text style={styles.itemTitle}>{item.title}</Text>
 			</View>
 		</TouchableOpacity>
@@ -33,8 +32,8 @@ const styles = StyleSheet.create({
 	},
 
 	itemImage: {
-		height: 43,
-		width: 43,
+		height: 41,
+		width: 41,
 		borderRadius: 50,
 		backgroundColor: Colors.secondary,
 		elevation: 3,

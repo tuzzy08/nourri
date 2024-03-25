@@ -18,7 +18,7 @@ export default function Page() {
 				showsVerticalScrollIndicator={false}
 			>
 				<View style={{ flex: 1 }}>
-					<View style={{ marginTop: -2 }}>
+					<View style={{ marginTop: -4 }}>
 						<CategoryList />
 					</View>
 					<View style={styles.banner}>
@@ -47,15 +47,15 @@ const styles = StyleSheet.create({
 
 	banner: {
 		alignItems: 'center',
-		marginTop: -25,
+		marginTop: -35,
 	},
 	foryou: {
 		marginTop: 25,
-		marginLeft: 6,
+		marginLeft: 17,
 		gap: 7,
 		// borderWidth: 0.5,
 		// borderColor: Colors.secondary,
-		height: hp('30%'),
+		height: hp('35%'),
 	},
 	foryouHeaderText: {
 		fontSize: 16,
