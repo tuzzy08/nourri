@@ -22,14 +22,6 @@ export function Header() {
 					paddingHorizontal: 3,
 				}}
 			>
-				<View
-					style={[
-						styles.profileIcon,
-						{
-							backgroundColor: colorScheme === 'dark' ? '#FFF' : Colors.primary,
-						},
-					]}
-				/>
 				<LocationBar />
 				{/* <TouchableOpacity> */}
 				<Link href={'/notifications'} asChild>

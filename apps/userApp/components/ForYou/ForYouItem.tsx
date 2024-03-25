@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 	},
 	itemImage: {
 		height: 100,
-		width: 100,
+		width: 110,
 		borderRadius: 5,
 		backgroundColor: Colors.grey,
 		elevation: 3,
