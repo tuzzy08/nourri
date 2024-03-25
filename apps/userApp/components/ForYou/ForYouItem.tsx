@@ -1,6 +1,10 @@
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { View, Text } from '../Themed';
 import Colors from '@/constants/Colors';
+import {
+	widthPercentageToDP as wp,
+	heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 type ForYouItem = {
 	id: number;
@@ -14,7 +18,7 @@ export function ForYouItem({ item }: { item: ForYouItem }) {
 		<TouchableOpacity>
 			<View style={styles.itemContainer}>
 				<View style={styles.itemImage} />
-				{/* <Text style={styles.itemTitle}>{item.title}</Text> */}
+				<Text style={styles.itemTitle}>{item.title}</Text>
 			</View>
 		</TouchableOpacity>
 	);
@@ -22,17 +26,17 @@ export function ForYouItem({ item }: { item: ForYouItem }) {
 
 const styles = StyleSheet.create({
 	itemContainer: {
-		maxHeight: 120,
-		width: 120,
-		justifyContent: 'center',
+		// borderWidth: 0.5,
+		// borderColor: Colors.primary,
 		alignItems: 'center',
+		marginRight: 5,
 		padding: 5,
-		gap: 2,
+		gap: 5,
 	},
 	itemImage: {
-		height: 100,
-		width: 110,
-		borderRadius: 5,
+		height: 120,
+		width: 135,
+		borderRadius: 6,
 		backgroundColor: Colors.grey,
 		elevation: 3,
 		shadowColor: 'rgb(100 116 139);',

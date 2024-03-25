@@ -1,9 +1,14 @@
 import { ScrollView, StyleSheet } from 'react-native';
-import { Text, View } from '@/components/Themed';
 import { SafeAreaView } from 'react-native';
+import {
+	widthPercentageToDP as wp,
+	heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import { Text, View } from '@/components/Themed';
 import { CategoryList } from '@/components/Categories/CategoryList';
 import { Banner } from '@/components/Banner';
 import { ForYou } from '@/components/ForYou';
+import Colors from '@/constants/Colors';
 
 export default function Page() {
 	return (
@@ -20,9 +25,9 @@ export default function Page() {
 						<Banner />
 					</View>
 					<View style={styles.foryou}>
-						<View style={{}}>
-							<Text style={styles.foryouHeaderText}>For You</Text>
-						</View>
+						{/* <View style={{}}> */}
+						<Text style={styles.foryouHeaderText}>For You</Text>
+						{/* </View> */}
 						<ForYou />
 					</View>
 				</View>
@@ -42,11 +47,15 @@ const styles = StyleSheet.create({
 
 	banner: {
 		alignItems: 'center',
+		marginTop: -25,
 	},
 	foryou: {
 		marginTop: 25,
 		marginLeft: 6,
 		gap: 7,
+		// borderWidth: 0.5,
+		// borderColor: Colors.secondary,
+		height: hp('30%'),
 	},
 	foryouHeaderText: {
 		fontSize: 16,

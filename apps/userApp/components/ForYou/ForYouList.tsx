@@ -7,6 +7,7 @@ import {
 import { View, Text } from '@/components/Themed';
 import data from './data.json';
 import { ForYouItem } from './ForYouItem';
+import Colors from '@/constants/Colors';
 
 export function ForYouList() {
 	return (
@@ -18,6 +19,16 @@ export function ForYouList() {
 				horizontal
 				contentContainerStyle={{ paddingHorizontal: 1 }}
 				showsHorizontalScrollIndicator={false}
+				// ItemSeparatorComponent={() => {
+				// 	return (
+				// 		<View
+				// 			style={{
+				// 				height: '100%',
+				// 				width: '20%',
+				// 			}}
+				// 		/>
+				// 	);
+				// }}
 			/>
 		</View>
 	);
@@ -25,6 +36,8 @@ export function ForYouList() {
 
 const styles = StyleSheet.create({
 	listContainer: {
-		height: hp('30%'),
+		flex: 1,
+		// borderColor: Colors.grey,
+		// borderWidth: 0.5,
 	},
 });

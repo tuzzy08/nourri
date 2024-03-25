@@ -16,9 +16,10 @@ export function Banner() {
 
 const styles = StyleSheet.create({
 	banner: {
-		width: wp('87%'),
-		height: hp('12%'),
+		width: wp('90%'),
+		height: hp('15%'),
 		borderColor: Colors.primary,
 		borderWidth: 0.4,
+		borderRadius: 8,
 	},
 });
