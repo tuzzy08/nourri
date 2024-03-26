@@ -1,17 +1,19 @@
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Tabs } from 'expo-router';
+import { Tabs, usePathname } from 'expo-router';
 import { StyleSheet } from 'react-native';
 import { Home, ClipboardList, Search, User } from 'lucide-react-native';
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+import { useSegments } from 'expo-router';
 import {
 	widthPercentageToDP as wp,
 	heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import { Header } from '@/components/Header';
 import { StatusBar } from 'expo-status-bar';
+import { Header as RestaurantHeader } from '@/components/RestaurantView';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -23,6 +25,11 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
 	const colorScheme = useColorScheme();
+	const segment = useSegments();
+	// get the current page from the segment
+	const page = segment[segment.length - 1];
+	// create an array of list pages you want to hide the tab bar in
+	const pagesToHideTabBar = ['', ''];
 
 	return (
 		<>
@@ -33,7 +40,10 @@ export default function TabLayout() {
 					// Disable the static render of the header on web
 					// to prevent a hydration error in React Navigation v6.
 					headerShown: useClientOnlyValue(false, true),
-					tabBarStyle: { height: hp('10%'), paddingBottom: 9 },
+					tabBarStyle: {
+						height: hp('10%'),
+						paddingBottom: 9,
+					},
 					tabBarLabelStyle: { fontSize: 11 },
 				}}
 			>
@@ -73,6 +83,17 @@ export default function TabLayout() {
 						tabBarIcon: ({ color }) => (
 							<User size={25} color={color} style={styles.tabIcon} />
 						),
+					}}
+				/>
+				<Tabs.Screen
+					name='[vendorId]'
+					options={{
+						href: null,
+						headerShown: false,
+						// header: () => <RestaurantHeader />,
+						tabBarStyle: {
+							display: page === '[vendorId]' ? 'none' : 'flex',
+						},
 					}}
 				/>
 			</Tabs>

@@ -5,7 +5,7 @@ import {
 	heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import { View, Text } from '@/components/Themed';
-import data from './data.json';
+import data from './data';
 import { ForYouItem } from './ForYouItem';
 import Colors from '@/constants/Colors';
 

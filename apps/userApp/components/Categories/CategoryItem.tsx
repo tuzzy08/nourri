@@ -24,7 +24,7 @@ export function CategoryItem({ item }: { item: CategoryItem }) {
 const styles = StyleSheet.create({
 	itemContainer: {
 		maxHeight: 90,
-		width: 73,
+		width: 65,
 		justifyContent: 'center',
 		alignItems: 'center',
 		padding: 5,

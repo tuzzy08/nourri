@@ -5,30 +5,56 @@ import {
 	widthPercentageToDP as wp,
 	heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import { Image, ImageSource } from 'expo-image';
 import { Rating } from '../Rating';
+import { useRouter } from 'expo-router';
+type ImgUrl =
+	| string
+	| number
+	| ImageSource
+	| ImageSource[]
+	| string[]
+	| null
+	| undefined;
 
 type ForYouItem = {
 	id: number;
 	title: string;
-	imgUrl: string;
+	imgUrl: ImgUrl;
 	href: string;
 	rating: number;
 	startingPrice: number;
 };
 
 export function ForYouItem({ item }: { item: ForYouItem }) {
+	console.log('🚀 ~ ForYouItem ~ item:', item);
+	const router = useRouter();
+
 	return (
-		<TouchableOpacity>
+		<TouchableOpacity
+			onPress={() =>
+				router.navigate({
+					params: { vendorId: item.id, imgUrl: item.imgUrl },
+					pathname: `/[vendorId]`,
+				})
+			}
+		>
 			<View style={styles.itemContainer}>
-				<View style={styles.itemImage} />
+				<Image source={item.imgUrl} style={styles.itemImage} />
 				<View style={styles.footer}>
 					<View style={styles.footerTop}>
 						<Text style={{ paddingVertical: 3 }}>{item.title}</Text>
 					</View>
 					<View style={styles.footerBottom}>
-						<Text
-							style={{ fontSize: 11 }}
-						>{`From  ₦${item.startingPrice} | Closed`}</Text>
+						<View style={{ flexDirection: 'row' }}>
+							<Text
+								style={{ fontSize: 11 }}
+							>{`From  ₦${item.startingPrice} | `}</Text>
+							<Text style={{ fontSize: 11, color: Colors.primary }}>
+								Closed
+							</Text>
+						</View>
+
 						<Rating rating={item.rating} />
 					</View>
 				</View>
