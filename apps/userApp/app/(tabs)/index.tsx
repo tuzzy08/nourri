@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, useColorScheme } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import {
 	widthPercentageToDP as wp,
@@ -11,24 +11,33 @@ import { ForYou } from '@/components/ForYou';
 import Colors from '@/constants/Colors';
 
 export default function Page() {
+	const colorScheme = useColorScheme();
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
 			<ScrollView
-				contentContainerStyle={styles.container}
+				contentContainerStyle={styles.scrollView}
 				showsVerticalScrollIndicator={false}
 			>
-				<View style={{ flex: 1 }}>
+				<View
+					style={[
+						styles.container,
+						{
+							backgroundColor:
+								colorScheme === 'light' ? Colors.lightGrey : '#000',
+						},
+					]}
+				>
 					<View style={{ marginTop: -4 }}>
 						<CategoryList />
 					</View>
 					<View style={styles.banner}>
 						<Banner />
 					</View>
-					<View style={styles.foryou}>
-						{/* <View style={{}}> */}
-						<Text style={styles.foryouHeaderText}>For You</Text>
-						{/* </View> */}
-						<ForYou />
+					<View style={styles.foryouContainer}>
+						<View style={styles.foryou}>
+							<Text style={styles.foryouHeaderText}>For You</Text>
+							<ForYou />
+						</View>
 					</View>
 				</View>
 			</ScrollView>
@@ -37,9 +46,10 @@ export default function Page() {
 }
 
 const styles = StyleSheet.create({
-	container: {
+	scrollView: {
 		flexGrow: 1,
 	},
+	container: { flex: 1 },
 	title: {
 		fontSize: 20,
 		fontWeight: 'bold',
@@ -49,13 +59,14 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		marginTop: -35,
 	},
+	foryouContainer: {},
 	foryou: {
 		marginTop: 25,
-		marginLeft: 17,
-		gap: 7,
+		paddingHorizontal: 14,
+		// marginLeft: 17,
+		// gap: 7,
 		// borderWidth: 0.5,
 		// borderColor: Colors.secondary,
-		height: hp('35%'),
 	},
 	foryouHeaderText: {
 		fontSize: 16,
