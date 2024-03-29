@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import {
 	widthPercentageToDP as wp,
 	heightPercentageToDP as hp,
@@ -8,26 +8,35 @@ import Colors from '@/constants/Colors';
 import { Text, View } from '../../Themed';
 import { ArrowLeft } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native';
+import { useRouter } from 'expo-router';
 
 type ImgUrl = string | number | ImageSource | ImageSource[] | string[] | null;
 
 export function Header({ imgUrl }: { imgUrl: any }) {
+	const router = useRouter();
 	return (
-		<SafeAreaView style={{ flex: 1 }}>
-			<View style={styles.container}>
-				<Image source={imgUrl} style={styles.image} />
-				<Text>Header</Text>
-			</View>
-		</SafeAreaView>
+		<>
+			<Image source={imgUrl} style={styles.image} />
+			<Pressable
+				onPress={() => router.back()}
+				style={{
+					width: 40,
+					height: 40,
+					borderRadius: 50,
+					backgroundColor: Colors.lightGrey,
+					position: 'absolute',
+					top: 40,
+					left: 15,
+					justifyContent: 'center',
+					alignItems: 'center',
+				}}
+			>
+				<ArrowLeft strokeWidth={5} size={18} color={'#000'} />
+			</Pressable>
+		</>
 	);
 }
 
 const styles = StyleSheet.create({
-	container: {
-		height: hp('30%'),
-		width: wp('100%'),
-		// borderWidth: 0.5,
-		// borderColor: Colors.primary,
-	},
-	image: { height: '100%', width: '100%', backgroundColor: 'blue' },
+	image: { height: '100%', width: '100%' },
 });

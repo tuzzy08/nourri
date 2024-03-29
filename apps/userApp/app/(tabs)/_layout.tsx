@@ -35,6 +35,7 @@ export default function TabLayout() {
 		<>
 			<StatusBar backgroundColor={colorScheme === 'dark' ? '#000' : '#FFF'} />
 			<Tabs
+				backBehavior='history'
 				screenOptions={{
 					tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
 					// Disable the static render of the header on web

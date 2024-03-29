@@ -1,0 +1,88 @@
+import Colors from '@/constants/Colors';
+import { StyleSheet, useColorScheme } from 'react-native';
+import {
+	widthPercentageToDP as wp,
+	heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import { Image } from 'expo-image';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { View, Text } from '../Themed';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
+type MenuItem = {
+	id: number;
+	foodId: string;
+	restaurantId: string;
+	title: string;
+	price: number;
+	imageUrl: string | number;
+	preparationTime: number;
+	isAvailable: boolean;
+};
+
+export function MenuItem({ item }: { item: MenuItem }) {
+	const colorScheme = useColorScheme();
+	return (
+		<View style={styles.container}>
+			<Image
+				style={{
+					height: '100%',
+					width: '35%',
+					borderRadius: 10,
+				}}
+				source={item.imageUrl}
+			/>
+
+			<View style={{ gap: 8 }}>
+				<Text style={styles.title}>{item.title}</Text>
+				<View style={{ flexDirection: 'row' }}>
+					<MaterialCommunityIcons
+						name='pot-steam'
+						color={Colors.secondary}
+						size={14}
+					/>
+					<Text style={styles.prepTimeText}> Cooking Time</Text>
+					<Text
+						style={styles.prepTimeText}
+					>{`  ~ ${Math.floor(item.preparationTime / 60)} Mins.`}</Text>
+				</View>
+				<Text
+					style={{ marginTop: 8, color: Colors.grey }}
+				>{`₦${item.price}`}</Text>
+				{/* <View style={{ display: 'flex', gap: 5 }}> */}
+				<TouchableOpacity style={styles.addButton}>
+					<Text style={{ alignSelf: 'center' }}>Add</Text>
+				</TouchableOpacity>
+				{/* </View> */}
+			</View>
+		</View>
+	);
+}
+
+const styles = StyleSheet.create({
+	container: {
+		flexDirection: 'row',
+		// borderColor: Colors.secondary,
+		// borderWidth: 0.5,
+		borderRadius: 10,
+		gap: 45,
+		height: hp('17%'),
+		marginBottom: 40,
+	},
+	title: {
+		fontSize: 14,
+	},
+	prepTimeText: {
+		fontSize: 11,
+		color: Colors.grey,
+	},
+	addButton: {
+		backgroundColor: Colors.secondary,
+		// alignSelf: 'center',
+		// position: 'absolute',
+		// top: 0,
+		marginTop: 14,
+		padding: 5,
+		paddingHorizontal: 15,
+	},
+});

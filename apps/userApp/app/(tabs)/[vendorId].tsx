@@ -1,9 +1,14 @@
-import { StyleSheet, useColorScheme } from 'react-native';
+import { StyleSheet, useColorScheme, SafeAreaView } from 'react-native';
 import { useLocalSearchParams, Link } from 'expo-router';
-import { SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import {
+	widthPercentageToDP as wp,
+	heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import { Text, View } from '@/components/Themed';
 import { Header } from '@/components/RestaurantView';
+import { Menu } from '@/components/Menu';
+import Colors from '@/constants/Colors';
 
 export default function Page() {
 	const vendor = useLocalSearchParams();
@@ -13,18 +18,31 @@ export default function Page() {
 
 	return (
 		<>
-			<SafeAreaView style={{ flex: 1 }}>
-				<StatusBar
-					translucent={true}
-					style={colorScheme === 'dark' ? 'light' : 'dark'}
-				/>
-				<View style={{ flex: 1 }}>
+			<StatusBar
+				translucent={true}
+				style={colorScheme === 'dark' ? 'light' : 'dark'}
+			/>
+			<View style={{ flex: 1 }}>
+				<View
+					style={{
+						height: hp('30%'),
+					}}
+				>
 					<Header imgUrl={res} />
-					<Text>restaurantView</Text>
 				</View>
-			</SafeAreaView>
+				{/* Menu items */}
+				<View style={styles.menu}>
+					<Menu />
+				</View>
+			</View>
 		</>
 	);
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	menu: {
+		flex: 1,
+		marginHorizontal: 5,
+		marginTop: 10,
+	},
+});

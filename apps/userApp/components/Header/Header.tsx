@@ -41,7 +41,6 @@ export function Header() {
 const styles = StyleSheet.create({
 	container: {
 		height: hp('13%'),
-		// backgroundColor: Colors.primary,
 		justifyContent: 'center',
 	},
 	profileIcon: {
