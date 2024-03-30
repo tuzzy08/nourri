@@ -20,7 +20,13 @@ type MenuItem = {
 	isAvailable: boolean;
 };
 
-export function MenuItem({ item }: { item: MenuItem }) {
+export function MenuItem({
+	item,
+	showModal,
+}: {
+	item: MenuItem;
+	showModal: () => void;
+}) {
 	const colorScheme = useColorScheme();
 	return (
 		<View style={styles.container}>
@@ -49,7 +55,7 @@ export function MenuItem({ item }: { item: MenuItem }) {
 				<Text
 					style={{ marginTop: 8, color: Colors.grey }}
 				>{`₦${item.price}`}</Text>
-				<TouchableOpacity style={styles.addButton}>
+				<TouchableOpacity style={styles.addButton} onPress={() => showModal()}>
 					<Text style={{ alignSelf: 'center' }}>Add</Text>
 				</TouchableOpacity>
 			</View>

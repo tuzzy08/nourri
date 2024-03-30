@@ -9,9 +9,10 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { useColorScheme } from '@/components/useColorScheme';
 import * as Location from 'expo-location';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useBoundStore } from '@/store/store';
+import { useColorScheme } from '@/components/useColorScheme';
 import { getAddressFromCoordinates } from '@/lib';
 
 export {
@@ -74,7 +75,9 @@ export default function RootLayout() {
 
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
-			<RootLayoutNav />
+			<BottomSheetModalProvider>
+				<RootLayoutNav />
+			</BottomSheetModalProvider>
 		</GestureHandlerRootView>
 	);
 }
