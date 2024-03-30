@@ -18,6 +18,7 @@ export function Header({ imgUrl }: { imgUrl: any }) {
 		<>
 			<Image source={imgUrl} style={styles.image} />
 			<Pressable
+				// TODO: Remember to reset the state of the selected menu category on exit.
 				onPress={() => router.back()}
 				style={{
 					width: 40,

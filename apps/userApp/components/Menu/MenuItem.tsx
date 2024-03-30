@@ -41,7 +41,7 @@ export function MenuItem({ item }: { item: MenuItem }) {
 						color={Colors.secondary}
 						size={14}
 					/>
-					<Text style={styles.prepTimeText}> Cooking Time</Text>
+					<Text style={styles.prepTimeText}>{`  Cooking Time`}</Text>
 					<Text
 						style={styles.prepTimeText}
 					>{`  ~ ${Math.floor(item.preparationTime / 60)} Mins.`}</Text>
@@ -49,11 +49,9 @@ export function MenuItem({ item }: { item: MenuItem }) {
 				<Text
 					style={{ marginTop: 8, color: Colors.grey }}
 				>{`₦${item.price}`}</Text>
-				{/* <View style={{ display: 'flex', gap: 5 }}> */}
 				<TouchableOpacity style={styles.addButton}>
 					<Text style={{ alignSelf: 'center' }}>Add</Text>
 				</TouchableOpacity>
-				{/* </View> */}
 			</View>
 		</View>
 	);
@@ -62,8 +60,6 @@ export function MenuItem({ item }: { item: MenuItem }) {
 const styles = StyleSheet.create({
 	container: {
 		flexDirection: 'row',
-		// borderColor: Colors.secondary,
-		// borderWidth: 0.5,
 		borderRadius: 10,
 		gap: 45,
 		height: hp('17%'),
@@ -78,11 +74,9 @@ const styles = StyleSheet.create({
 	},
 	addButton: {
 		backgroundColor: Colors.secondary,
-		// alignSelf: 'center',
-		// position: 'absolute',
-		// top: 0,
 		marginTop: 14,
 		padding: 5,
 		paddingHorizontal: 15,
+		borderRadius: 5,
 	},
 });
