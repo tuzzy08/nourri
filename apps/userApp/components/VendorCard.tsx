@@ -1,10 +1,6 @@
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { View, Text } from '@/components/Themed';
 import Colors from '@/constants/Colors';
-import {
-	widthPercentageToDP as wp,
-	heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
 import { Image, ImageSource } from 'expo-image';
 import { Rating } from '@/components/Rating';
 import { useRouter } from 'expo-router';
@@ -45,7 +41,6 @@ export function VendorCard({ item, style }: { item: ForYouItem; style?: {} }) {
 					<Image source={item.imgUrl} style={styles.itemImage} />
 				</View>
 				{/* Details section / Footer */}
-				{/* <View style={{}}></View> */}
 				<View style={styles.footer}>
 					<View style={styles.footerTop}>
 						<Text style={{ paddingVertical: 3 }}>{item.title}</Text>
@@ -63,7 +58,6 @@ export function VendorCard({ item, style }: { item: ForYouItem; style?: {} }) {
 						<Rating rating={item.rating} />
 					</View>
 				</View>
-				{/* <Text style={styles.itemTitle}>{item.title}</Text> */}
 			</View>
 		</TouchableOpacity>
 	);

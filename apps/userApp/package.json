@@ -15,8 +15,10 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.0",
     "@gorhom/bottom-sheet": "^4.6.1",
+    "@kinde-oss/react-native-sdk-0-7x": "^1.2.2",
     "@react-navigation/native": "^6.0.2",
     "@shopify/flash-list": "1.6.3",
+    "axios": "^1.6.8",
     "expo": "~50.0.14",
     "expo-font": "~11.10.3",
     "expo-image": "~1.10.6",
@@ -40,7 +42,8 @@
     "react-native-star-rating-widget": "^1.7.3",
     "react-native-svg": "^15.1.0",
     "react-native-web": "~0.19.6",
-    "zustand": "^4.5.2"
+    "zustand": "^4.5.2",
+    "expo-secure-store": "~12.8.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
