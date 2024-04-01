@@ -14,6 +14,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useBoundStore } from '@/store/store';
 import { useColorScheme } from '@/components/useColorScheme';
 import { getAddressFromCoordinates } from '@/lib';
+import { useAuth } from '@/hooks/useAuth';
 
 export {
 	// Catch any errors thrown by the Layout component.
@@ -29,6 +30,7 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+	const { authState } = useAuth();
 	const setUserLocation = useBoundStore((state) => state.setUserLocation);
 
 	const [loaded, error] = useFonts({
@@ -76,6 +78,11 @@ export default function RootLayout() {
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
 			<BottomSheetModalProvider>
+				{/* {authState?.authenticated && authState.token ? (
+					<RootLayoutNav />
+				) : (
+					<UnAuthenticatedStack />
+				)} */}
 				<RootLayoutNav />
 			</BottomSheetModalProvider>
 		</GestureHandlerRootView>
@@ -90,6 +97,28 @@ function RootLayoutNav() {
 			<Stack>
 				<Stack.Screen name='(tabs)' options={{ headerShown: false }} />
 				<Stack.Screen name='notifications' options={{}} />
+			</Stack>
+		</ThemeProvider>
+	);
+}
+
+function UnAuthenticatedStack() {
+	const colorScheme = useColorScheme();
+	return (
+		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+			<Stack>
+				<Stack.Screen
+					name='(unauthenticated)/login'
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name='(unauthenticated)/register'
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name='(unauthenticated)/confirmation'
+					options={{ headerShown: false }}
+				/>
 			</Stack>
 		</ThemeProvider>
 	);

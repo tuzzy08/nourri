@@ -42,7 +42,7 @@ export function AuthProvider() {
 		token: null,
 		authenticated: false,
 	});
-
+	// * Load Token from secure store if it exists
 	useEffect(() => {
 		async function loadToken() {
 			const token = await getFromSecureStore(TOKEN_KEY);
