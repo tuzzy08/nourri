@@ -32,8 +32,8 @@ export function MenuItem({
 		<View style={styles.container}>
 			<Image
 				style={{
-					height: '100%',
-					width: '35%',
+					height: '70%',
+					width: '30%',
 					borderRadius: 10,
 				}}
 				source={item.imageUrl}
@@ -56,7 +56,7 @@ export function MenuItem({
 					style={{ marginTop: 8, color: Colors.grey }}
 				>{`₦${item.price}`}</Text>
 				<TouchableOpacity style={styles.addButton} onPress={() => showModal()}>
-					<Text style={{ alignSelf: 'center' }}>Add</Text>
+					<Text style={{ alignSelf: 'center' }}>ADD</Text>
 				</TouchableOpacity>
 			</View>
 		</View>
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
 	addButton: {
 		backgroundColor: Colors.secondary,
 		marginTop: 14,
-		padding: 5,
+		paddingVertical: 10,
 		paddingHorizontal: 15,
 		borderRadius: 5,
 	},

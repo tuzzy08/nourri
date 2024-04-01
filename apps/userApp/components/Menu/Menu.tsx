@@ -1,9 +1,10 @@
-import { StyleSheet, useColorScheme } from 'react-native';
+import { Pressable, StyleSheet, useColorScheme } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import {
 	BottomSheetView,
 	BottomSheetModal,
 	BottomSheetBackdrop,
+	TouchableOpacity,
 } from '@gorhom/bottom-sheet';
 // import {
 // 	widthPercentageToDP as wp,
@@ -63,16 +64,92 @@ export function Menu() {
 				snapPoints={snapPoints}
 				onChange={handleSheetChanges}
 				backdropComponent={renderBackdrop}
-				handleStyle={{
-					display: 'none',
-				}}
+				// handleStyle={{
+				// 	display: 'none',
+				// }}
 				// * Disables sliding either the content or handle to close the bottom sheet.
 				// enableContentPanningGesture={false}
 				// enableHandlePanningGesture={false}
 			>
 				<BottomSheetView style={styles.contentContainer}>
+					{/* Food image here */}
 					<View style={styles.bottomSheetImage}></View>
-					<Text>Awesome 🎉</Text>
+					{/* Main bottom sheet content */}
+					<BottomSheetView style={styles.bottomSheetContent}>
+						{/* Pricing info */}
+						<BottomSheetView style={{ marginTop: 5, padding: 8, gap: 5 }}>
+							<Text style={styles.bottomSheetTitle}>Food Title</Text>
+							<Text style={styles.bottomSheetPrice}>Food Price🎉</Text>
+						</BottomSheetView>
+						{/* Add and Minus & Add to cart buttons */}
+						<BottomSheetView
+							style={{
+								flexDirection: 'row',
+								gap: 30,
+								marginLeft: 20,
+								// borderWidth: 1,
+								// borderColor: '#000',
+							}}
+						>
+							{/* Add and Minus buttons */}
+							<BottomSheetView
+								style={{
+									flexDirection: 'row',
+									// gap: 15,
+									borderWidth: 1,
+									borderColor: '#000',
+									justifyContent: 'center',
+									alignItems: 'center',
+									borderRadius: 4,
+									// padding: 10,
+								}}
+							>
+								<Pressable style={{ padding: 18 }}>
+									<Text
+										style={{ color: '#000', fontSize: 18, fontWeight: '700' }}
+									>
+										-
+									</Text>
+								</Pressable>
+								<Text
+									style={{
+										color: '#000',
+										padding: 18,
+										fontSize: 18,
+										fontWeight: '700',
+									}}
+								>
+									1
+								</Text>
+								<Pressable style={{ padding: 18 }}>
+									<Text
+										style={{ color: '#000', fontSize: 18, fontWeight: '700' }}
+									>
+										+
+									</Text>
+								</Pressable>
+							</BottomSheetView>
+							{/* Add to cart button */}
+							<TouchableOpacity
+								style={{
+									borderColor: '#000',
+									borderRadius: 4,
+									flex: 1,
+									width: 150,
+									justifyContent: 'center',
+									alignItems: 'center',
+									backgroundColor: Colors.secondary,
+								}}
+							>
+								<Text
+									style={{ color: '#000', fontSize: 18, fontWeight: '500' }}
+								>
+									ADD
+								</Text>
+							</TouchableOpacity>
+						</BottomSheetView>
+						{/*  */}
+					</BottomSheetView>
 				</BottomSheetView>
 			</BottomSheetModal>
 		</View>
@@ -109,4 +186,10 @@ const styles = StyleSheet.create({
 		borderTopLeftRadius: 15,
 		borderTopRightRadius: 15,
 	},
+	bottomSheetContent: {
+		height: '65%',
+		justifyContent: 'space-between',
+	},
+	bottomSheetTitle: { fontSize: 16, fontWeight: '600', color: Colors.grey },
+	bottomSheetPrice: { fontSize: 14, color: '#000' },
 });

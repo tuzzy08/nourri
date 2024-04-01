@@ -1,12 +1,12 @@
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import { View, Text } from '../Themed';
+import { View, Text } from '@/components/Themed';
 import Colors from '@/constants/Colors';
 import {
 	widthPercentageToDP as wp,
 	heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import { Image, ImageSource } from 'expo-image';
-import { Rating } from '../Rating';
+import { Rating } from '@/components/Rating';
 import { useRouter } from 'expo-router';
 type ImgUrl =
 	| string
@@ -26,7 +26,7 @@ type ForYouItem = {
 	startingPrice: number;
 };
 
-export function ForYouItem({ item }: { item: ForYouItem }) {
+export function VendorCard({ item, style }: { item: ForYouItem; style?: {} }) {
 	console.log('🚀 ~ ForYouItem ~ item:', item);
 	const router = useRouter();
 
@@ -39,8 +39,13 @@ export function ForYouItem({ item }: { item: ForYouItem }) {
 				})
 			}
 		>
-			<View style={styles.itemContainer}>
-				<Image source={item.imgUrl} style={styles.itemImage} />
+			<View style={[styles.itemContainer, { ...style }]}>
+				{/* Image Section */}
+				<View style={{ width: '100%', height: '70%' }}>
+					<Image source={item.imgUrl} style={styles.itemImage} />
+				</View>
+				{/* Details section / Footer */}
+				{/* <View style={{}}></View> */}
 				<View style={styles.footer}>
 					<View style={styles.footerTop}>
 						<Text style={{ paddingVertical: 3 }}>{item.title}</Text>
@@ -66,51 +71,35 @@ export function ForYouItem({ item }: { item: ForYouItem }) {
 
 const styles = StyleSheet.create({
 	itemContainer: {
-		// flex: 1,
-		height: 250,
-		width: 250,
+		// gap: 5,
+		// borderColor: 'red',
 		// borderWidth: 0.5,
-		// borderColor: Colors.primary,
-		// alignItems: 'center',
-		marginRight: 9,
-		// padding: 5,
-		gap: 5,
 	},
 	itemImage: {
-		height: 150,
+		height: '100%',
 		width: '100%',
 		borderRadius: 6,
-		backgroundColor: Colors.grey,
-		elevation: 3,
-		shadowColor: 'rgb(100 116 139);',
-		// shadowOpacity: 0.8,
-		// shadowRadius: 25,
-		// shadowOffset: { width: 1, height: 13 },
 	},
 	itemTitle: {
 		fontSize: 12,
 		fontWeight: '400',
 	},
 	footer: {
-		height: '100%',
+		height: '30%',
 		width: '100%',
-		// borderWidth: 0.5,
-		// borderColor: 'blue',
 		gap: 4,
+		// borderColor: 'green',
+		// borderWidth: 0.5,
 	},
 	footerTop: {
-		// height: '50%',
-		// width: '100%',
-		// borderWidth: 0.5,
-		// borderColor: 'green',
 		paddingHorizontal: 3,
 	},
 	footerBottom: {
-		// borderWidth: 0.5,
-		// borderColor: 'marroon',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
 		paddingHorizontal: 3,
+		// borderColor: 'yellow',
+		// borderWidth: 0.5,
 	},
 });
