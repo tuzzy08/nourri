@@ -15,6 +15,7 @@ import { useBoundStore } from '@/store/store';
 import { useColorScheme } from '@/components/useColorScheme';
 import { getAddressFromCoordinates } from '@/lib';
 import { useAuth } from '@/hooks/useAuth';
+import { AuthProvider } from '@/contexts/AuthContext';
 
 export {
 	// Catch any errors thrown by the Layout component.
@@ -30,7 +31,6 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-	const { authState } = useAuth();
 	const setUserLocation = useBoundStore((state) => state.setUserLocation);
 
 	const [loaded, error] = useFonts({
@@ -78,18 +78,15 @@ export default function RootLayout() {
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
 			<BottomSheetModalProvider>
-				{/* {authState?.authenticated && authState.token ? (
-					<RootLayoutNav />
-				) : (
-					<UnAuthenticatedStack />
-				)} */}
-				<RootLayoutNav />
+				<AuthProvider>
+					<Router />
+				</AuthProvider>
 			</BottomSheetModalProvider>
 		</GestureHandlerRootView>
 	);
 }
 
-function RootLayoutNav() {
+function AuthenticatedStack() {
 	const colorScheme = useColorScheme();
 
 	return (
@@ -108,7 +105,7 @@ function UnAuthenticatedStack() {
 		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
 			<Stack>
 				<Stack.Screen
-					name='(unauthenticated)/login'
+					name='(unauthenticated)/index'
 					options={{ headerShown: false }}
 				/>
 				<Stack.Screen
@@ -121,5 +118,19 @@ function UnAuthenticatedStack() {
 				/>
 			</Stack>
 		</ThemeProvider>
+	);
+}
+
+function Router() {
+	const { authState } = useAuth();
+	return (
+		<>
+			{authState?.authenticated !== false &&
+			(authState?.token !== null || authState.token !== '') ? (
+				<AuthenticatedStack />
+			) : (
+				<UnAuthenticatedStack />
+			)}
+		</>
 	);
 }

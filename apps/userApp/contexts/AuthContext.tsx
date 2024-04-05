@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import kindeClient from '@/lib/kinde';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
@@ -34,7 +34,7 @@ async function deleteFromSecureStore(key: string) {
 
 export const AuthContext = createContext<AuthData>(defaultContext);
 
-export function AuthProvider() {
+export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const [authState, setAuthState] = useState<{
 		token: any;
 		authenticated: boolean;
@@ -100,6 +100,8 @@ export function AuthProvider() {
 	return (
 		<AuthContext.Provider
 			value={{ authState, handleLogOut, handleSignIn, handleSignUp }}
-		></AuthContext.Provider>
+		>
+			{children}
+		</AuthContext.Provider>
 	);
 }
