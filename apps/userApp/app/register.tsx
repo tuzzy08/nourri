@@ -44,6 +44,7 @@ export default function Page() {
 							flexDirection: 'row',
 							justifyContent: 'space-between',
 							alignItems: 'center',
+							gap: 10,
 						}}
 					>
 						{/* First Name */}
@@ -80,10 +81,17 @@ export default function Page() {
 						</View>
 					</View>
 					{/* BirthDate */}
-					<Text>Birthdate</Text>
-					<TextInput style={styles.input} placeholder='enter birth date' />
-					<Text>Referral Code</Text>
-					<TextInput style={styles.input} placeholder='enter code(if any)' />
+					<View style={{ gap: 5 }}>
+						<Text>Birthdate</Text>
+						<TextInput style={styles.input} placeholder='enter birth date' />
+					</View>
+
+					{/* Referral Code */}
+					<View style={{ gap: 5 }}>
+						<Text>Referral Code</Text>
+						<TextInput style={styles.input} placeholder='enter code(if any)' />
+					</View>
+
 					<View style={{ marginTop: 25 }}>
 						<TouchableOpacity style={styles.button}>
 							<Text style={{ color: '#FFF', fontSize: 16, fontWeight: '700' }}>
@@ -103,7 +111,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		marginTop: 100,
+		marginTop: 130,
 	},
 	image: {
 		width: 400,
@@ -117,8 +125,8 @@ const styles = StyleSheet.create({
 		borderRadius: 20,
 		width: wp('95%'),
 		// height: hp('70%'),
-		// justifyContent: 'center',
-		// alignItems: 'center',
+		justifyContent: 'center',
+		alignItems: 'center',
 		gap: 20,
 		marginTop: 30,
 		padding: 10,
