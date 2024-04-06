@@ -5,7 +5,7 @@ import { VendorCard } from '../VendorCard';
 
 export function Restaurants() {
 	return (
-		<View style={{ flex: 1 }}>
+		<View style={{ width: '100%', minHeight: '80%' }}>
 			<FlashList
 				data={data}
 				renderItem={({ item }) => (

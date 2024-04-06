@@ -6,7 +6,7 @@ import { Home, ClipboardList, Search, User } from 'lucide-react-native';
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
-import { useSegments } from 'expo-router';
+import { Redirect, useSegments } from 'expo-router';
 import {
 	widthPercentageToDP as wp,
 	heightPercentageToDP as hp,
@@ -14,6 +14,7 @@ import {
 import { Header } from '@/components/Header';
 import { StatusBar } from 'expo-status-bar';
 import { Header as RestaurantHeader } from '@/components/RestaurantView';
+import { useAuth } from '@/hooks/useAuth';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -24,6 +25,11 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
+	const { authState } = useAuth();
+	// * Check if the user is authenticated
+	if (!authState?.authenticated || authState.token === null) {
+		return <Redirect href='/register' />;
+	}
 	const colorScheme = useColorScheme();
 	const segment = useSegments();
 	// get the current page from the segment
@@ -38,9 +44,6 @@ export default function TabLayout() {
 				backBehavior='history'
 				screenOptions={{
 					tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-					// Disable the static render of the header on web
-					// to prevent a hydration error in React Navigation v6.
-					headerShown: useClientOnlyValue(false, true),
 					tabBarStyle: {
 						height: hp('10%'),
 						paddingBottom: 9,
@@ -95,6 +98,12 @@ export default function TabLayout() {
 						tabBarStyle: {
 							display: page === '[vendorId]' ? 'none' : 'flex',
 						},
+					}}
+				/>
+				<Tabs.Screen
+					name='(nonTabs)'
+					options={{
+						href: null,
 					}}
 				/>
 			</Tabs>

@@ -23,9 +23,7 @@ type ForYouItem = {
 };
 
 export function VendorCard({ item, style }: { item: ForYouItem; style?: {} }) {
-	console.log('🚀 ~ ForYouItem ~ item:', item);
 	const router = useRouter();
-
 	return (
 		<TouchableOpacity
 			onPress={() =>

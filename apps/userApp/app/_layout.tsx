@@ -16,6 +16,8 @@ import { useColorScheme } from '@/components/useColorScheme';
 import { getAddressFromCoordinates } from '@/lib';
 import { useAuth } from '@/hooks/useAuth';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { NavigationContainer } from '@react-navigation/native';
+import { Slot } from 'expo-router';
 
 export {
 	// Catch any errors thrown by the Layout component.
@@ -32,7 +34,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
 	const setUserLocation = useBoundStore((state) => state.setUserLocation);
-
+	const colorScheme = useColorScheme();
 	const [loaded, error] = useFonts({
 		SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
 		...FontAwesome.font,
@@ -76,61 +78,44 @@ export default function RootLayout() {
 	}
 
 	return (
-		<GestureHandlerRootView style={{ flex: 1 }}>
-			<BottomSheetModalProvider>
-				<AuthProvider>
-					<Router />
-				</AuthProvider>
-			</BottomSheetModalProvider>
-		</GestureHandlerRootView>
+		<AuthProvider>
+			<GestureHandlerRootView style={{ flex: 1 }}>
+				<ThemeProvider
+					value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+				>
+					<BottomSheetModalProvider>
+						<Slot />
+					</BottomSheetModalProvider>
+				</ThemeProvider>
+			</GestureHandlerRootView>
+		</AuthProvider>
 	);
 }
 
-function AuthenticatedStack() {
-	const colorScheme = useColorScheme();
+// function AuthenticatedStack() {
+// 	return (
+// 		<Stack>
+// 			<Stack.Screen name='(authenticated)' options={{ headerShown: false }} />
+// 			<Stack.Screen name='notifications' options={{}} />
+// 		</Stack>
+// 	);
+// }
 
-	return (
-		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-			<Stack>
-				<Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-				<Stack.Screen name='notifications' options={{}} />
-			</Stack>
-		</ThemeProvider>
-	);
-}
+// function UnAuthenticatedStack() {
+// 	const colorScheme = useColorScheme();
+// 	return <Stack screenOptions={{ headerShown: false }} />;
+// }
 
-function UnAuthenticatedStack() {
-	const colorScheme = useColorScheme();
-	return (
-		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-			<Stack>
-				<Stack.Screen
-					name='(unauthenticated)/index'
-					options={{ headerShown: false }}
-				/>
-				<Stack.Screen
-					name='(unauthenticated)/register'
-					options={{ headerShown: false }}
-				/>
-				<Stack.Screen
-					name='(unauthenticated)/confirmation'
-					options={{ headerShown: false }}
-				/>
-			</Stack>
-		</ThemeProvider>
-	);
-}
-
-function Router() {
-	const { authState } = useAuth();
-	return (
-		<>
-			{authState?.authenticated !== false &&
-			(authState?.token !== null || authState.token !== '') ? (
-				<AuthenticatedStack />
-			) : (
-				<UnAuthenticatedStack />
-			)}
-		</>
-	);
-}
+// function Router() {
+// 	const { authState } = useAuth();
+// 	console.log(authState);
+// 	return (
+// 		<>
+// 			{authState?.authenticated && authState.token !== null ? (
+// 				<AuthenticatedStack />
+// 			) : (
+// 				<UnAuthenticatedStack />
+// 			)}
+// 		</>
+// 	);
+// }
