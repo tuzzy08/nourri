@@ -12,14 +12,49 @@ import {
 	widthPercentageToDP as wp,
 	heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import { StatusBar } from 'expo-status-bar';
 // import { View, Text } from '@/components/Themed';
 import Colors from '@/constants/Colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useForm, Controller } from 'react-hook-form';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function Page() {
-	const src = require('@/assets/images/delivery.png');
+	const { handleSignUp } = useAuth();
+
+	type formDataType = {
+		firstName: string;
+		lastName: string;
+		phone: string;
+		email: string;
+		birthDate: string;
+		referralCode: string;
+	};
+
+	const {
+		control,
+		handleSubmit,
+		formState: { errors },
+	} = useForm({
+		defaultValues: {
+			firstName: '',
+			lastName: '',
+			phone: '',
+			email: '',
+			birthDate: '',
+			referralCode: '',
+		},
+	});
+	const onSubmit = (data: formDataType) => {
+		console.log('🚀 ~ onSubmit ~ data:', data);
+
+		// console.log('Using Firebase');
+		// handleSignUp(data.email, data.);
+	};
+
 	return (
 		<ScrollView style={{ flexGrow: 1 }}>
+			<StatusBar style='dark' />
 			<View style={styles.container}>
 				{/* <Image source={src} style={styles.image} /> */}
 				{/* <Text>login</Text> */}
@@ -29,14 +64,47 @@ export default function Page() {
 						<Text style={styles.label}>
 							Phone Number <Text style={styles.required}>*</Text>
 						</Text>
-						<TextInput style={styles.input} placeholder='' />
+						<Controller
+							control={control}
+							rules={{
+								required: true,
+							}}
+							render={({ field: { onChange, onBlur, value } }) => (
+								<TextInput
+									style={styles.input}
+									placeholder=''
+									onBlur={onBlur}
+									onChangeText={onChange}
+									value={value}
+								/>
+							)}
+							name='phone'
+						/>
+						{errors.firstName && <Text>This is required.</Text>}
+						{/* <TextInput style={styles.input} placeholder='' /> */}
 					</View>
 					{/* Email */}
 					<View style={{ gap: 10 }}>
 						<Text>
 							Email address <Text style={styles.required}>*</Text>
 						</Text>
-						<TextInput style={styles.input} placeholder='' />
+						<Controller
+							control={control}
+							rules={{
+								required: true,
+							}}
+							render={({ field: { onChange, onBlur, value } }) => (
+								<TextInput
+									style={styles.input}
+									placeholder=''
+									onBlur={onBlur}
+									onChangeText={onChange}
+									value={value}
+								/>
+							)}
+							name='email'
+						/>
+						{/* <TextInput style={styles.input} placeholder='' /> */}
 					</View>
 					{/* First & Last Names Container */}
 					<View
@@ -52,7 +120,29 @@ export default function Page() {
 							<Text>
 								First Name <Text style={styles.required}>*</Text>
 							</Text>
-							<TextInput
+							<Controller
+								control={control}
+								rules={{
+									required: true,
+								}}
+								render={({ field: { onChange, onBlur, value } }) => (
+									<TextInput
+										style={{
+											height: hp('6%'),
+											width: wp('41%'),
+											backgroundColor: Colors.grey,
+											borderRadius: 15,
+											paddingHorizontal: 10,
+										}}
+										placeholder=''
+										onBlur={onBlur}
+										onChangeText={onChange}
+										value={value}
+									/>
+								)}
+								name='firstName'
+							/>
+							{/* <TextInput
 								style={{
 									height: hp('6%'),
 									width: wp('41%'),
@@ -61,14 +151,36 @@ export default function Page() {
 									paddingHorizontal: 10,
 								}}
 								placeholder=''
-							/>
+							/> */}
 						</View>
 						{/* Last Name */}
 						<View style={{ gap: 5 }}>
 							<Text>
 								Last Name <Text style={styles.required}>*</Text>
 							</Text>
-							<TextInput
+							<Controller
+								control={control}
+								rules={{
+									required: true,
+								}}
+								render={({ field: { onChange, onBlur, value } }) => (
+									<TextInput
+										style={{
+											height: hp('6%'),
+											width: wp('41%'),
+											backgroundColor: Colors.grey,
+											borderRadius: 15,
+											paddingHorizontal: 10,
+										}}
+										placeholder=''
+										onBlur={onBlur}
+										onChangeText={onChange}
+										value={value}
+									/>
+								)}
+								name='lastName'
+							/>
+							{/* <TextInput
 								style={{
 									height: hp('6%'),
 									width: wp('41%'),
@@ -77,23 +189,58 @@ export default function Page() {
 									paddingHorizontal: 10,
 								}}
 								placeholder=''
-							/>
+							/> */}
 						</View>
 					</View>
 					{/* BirthDate */}
 					<View style={{ gap: 5 }}>
 						<Text>Birthdate</Text>
-						<TextInput style={styles.input} placeholder='enter birth date' />
+						<Controller
+							control={control}
+							rules={{
+								required: false,
+							}}
+							render={({ field: { onChange, onBlur, value } }) => (
+								<TextInput
+									style={styles.input}
+									placeholder=''
+									onBlur={onBlur}
+									onChangeText={onChange}
+									value={value}
+								/>
+							)}
+							name='birthDate'
+						/>
+						{/* <TextInput style={styles.input} placeholder='enter birth date' /> */}
 					</View>
 
 					{/* Referral Code */}
 					<View style={{ gap: 5 }}>
 						<Text>Referral Code</Text>
-						<TextInput style={styles.input} placeholder='enter code(if any)' />
+						<Controller
+							control={control}
+							rules={{
+								required: false,
+							}}
+							render={({ field: { onChange, onBlur, value } }) => (
+								<TextInput
+									style={styles.input}
+									placeholder=''
+									onBlur={onBlur}
+									onChangeText={onChange}
+									value={value}
+								/>
+							)}
+							name='referralCode'
+						/>
+						{/* <TextInput style={styles.input} placeholder='enter code(if any)' /> */}
 					</View>
 
 					<View style={{ marginTop: 25 }}>
-						<TouchableOpacity style={styles.button}>
+						<TouchableOpacity
+							style={styles.button}
+							onPress={handleSubmit(onSubmit)}
+						>
 							<Text style={{ color: '#FFF', fontSize: 16, fontWeight: '700' }}>
 								Register
 							</Text>

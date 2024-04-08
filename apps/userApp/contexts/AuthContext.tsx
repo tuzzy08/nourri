@@ -1,13 +1,17 @@
 import React, { createContext, useEffect, useState } from 'react';
-import kindeClient from '@/lib/kinde';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
+import {
+	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword,
+} from 'firebase/auth';
+import { auth } from '@/lib/firebase';
 
 interface AuthData {
 	authState?: { token: string | null; authenticated: boolean };
-	handleSignIn?: () => void;
+	handleSignIn?: (email: string, password: string) => void;
 	handleLogOut?: () => void;
-	handleSignUp?: () => void;
+	handleSignUp?: (email: string, password: string) => void;
 }
 
 const defaultContext = {
@@ -42,6 +46,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		token: null,
 		authenticated: false,
 	});
+
 	// * Load Token from secure store if it exists
 	useEffect(() => {
 		async function loadToken() {
@@ -51,34 +56,42 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		loadToken();
 	}, []);
 
-	const handleSignUp = async () => {
+	const handleSignUp = async (email: string, password: string) => {
 		try {
-			const token = await kindeClient.register();
+			// const token = await kindeClient.register();
+			const { user } = await createUserWithEmailAndPassword(
+				auth,
+				email,
+				password
+			);
+			const token = await user.getIdToken();
+			console.log(token);
+			// const token = await kindeClient.register();
 			if (token) {
 				// * User was authenticated
 				setAuthState({ token: token, authenticated: true });
 				// * Save token to secure storage
-				await saveToSecureStore(TOKEN_KEY, token.access_token);
+				await saveToSecureStore(TOKEN_KEY, token);
 				// * Set auth token in header
-				axios.defaults.headers.common['Authorization'] =
-					`Bearer ${token.access_token}`;
+				axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 			}
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
-	const handleSignIn = async () => {
+	const handleSignIn = async (email: string, password: string) => {
 		try {
-			const token = await kindeClient.login();
+			const { user } = await signInWithEmailAndPassword(auth, email, password);
+			const token = await user.getIdToken();
+			console.log('🚀 ~ handleSignIn ~ token:', token);
 			if (token) {
 				// * User was authenticated
 				setAuthState({ token: token, authenticated: true });
 				// * Save token to secure storage
-				await saveToSecureStore('authToken', token.access_token);
+				await saveToSecureStore('authToken', token);
 				// * Set auth token in header
-				axios.defaults.headers.common['Authorization'] =
-					`Bearer ${token.access_token}`;
+				axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 			}
 		} catch (error) {
 			console.log(error);
@@ -87,13 +100,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 	const handleLogOut = async () => {
 		try {
-			const loggedOut = await kindeClient.logout(true);
-			if (loggedOut) {
-				// User was logged out
-				setAuthState({ token: null, authenticated: false });
-				// Delete token from storage
-				await deleteFromSecureStore(TOKEN_KEY);
-			}
+			// const loggedOut = await kindeClient.logout(true);
+			// if (loggedOut) {
+			// 	// User was logged out
+			// 	setAuthState({ token: null, authenticated: false });
+			// 	// Delete token from storage
+			// 	await deleteFromSecureStore(TOKEN_KEY);
+			// }
 		} catch (error) {}
 	};
 
