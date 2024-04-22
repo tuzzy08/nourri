@@ -13,29 +13,23 @@ import {
 } from 'react-native-responsive-screen';
 import { Header } from '@/components/Header';
 import { StatusBar } from 'expo-status-bar';
-import { Header as RestaurantHeader } from '@/components/RestaurantView';
 import { useAuth } from '@/hooks/useAuth';
 
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
-function TabBarIcon(props: {
-	name: React.ComponentProps<typeof FontAwesome>['name'];
-	color: string;
-}) {
-	return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
-
 export default function TabLayout() {
+	return <Redirect href='/login' />;
 	const { authState } = useAuth();
+	console.log('🚀 ~ TabLayout ~ authState:', authState);
+
 	// * Check if the user is authenticated
-	if (!authState?.authenticated || authState.token === null) {
-		return <Redirect href='/register' />;
+	if (authState!.authenticated !== true || authState!.token === null) {
+		return <Redirect href='/login' />;
 	}
 	const colorScheme = useColorScheme();
 	const segment = useSegments();
 	// get the current page from the segment
 	const page = segment[segment.length - 1];
 	// create an array of list pages you want to hide the tab bar in
-	const pagesToHideTabBar = ['', ''];
+	// const pagesToHideTabBar = ['', ''];
 
 	return (
 		<>

@@ -1,12 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { ConfirmationCodeField } from '@/components/ConfirmationCode/ConfirmationCodeField';
 
-export default function confirmation() {
-	return (
-		<View>
-			<Text>confirmation</Text>
-		</View>
-	);
+export default function Page() {
+	return <ConfirmationCodeField />;
 }
-
-const styles = StyleSheet.create({});

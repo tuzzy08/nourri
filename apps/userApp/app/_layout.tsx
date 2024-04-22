@@ -5,7 +5,6 @@ import {
 	ThemeProvider,
 } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -14,9 +13,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useBoundStore } from '@/store/store';
 import { useColorScheme } from '@/components/useColorScheme';
 import { getAddressFromCoordinates } from '@/lib';
-import { useAuth } from '@/hooks/useAuth';
 import { AuthProvider } from '@/contexts/AuthContext';
-import { NavigationContainer } from '@react-navigation/native';
 import { Slot } from 'expo-router';
 
 export {
@@ -24,10 +21,10 @@ export {
 	ErrorBoundary,
 } from 'expo-router';
 
-export const unstable_settings = {
-	// Ensure that reloading on `/modal` keeps a back button present.
-	initialRouteName: '(tabs)',
-};
+// export const unstable_settings = {
+// 	// Ensure that reloading on `/modal` keeps a back button present.
+// 	initialRouteName: '(tabs)',
+// };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -50,6 +47,7 @@ export default function RootLayout() {
 			SplashScreen.hideAsync();
 		}
 	}, [loaded]);
+	// Check for location permissions
 	useEffect(() => {
 		(async () => {
 			let { status } = await Location.requestForegroundPermissionsAsync();
@@ -91,31 +89,3 @@ export default function RootLayout() {
 		</AuthProvider>
 	);
 }
-
-// function AuthenticatedStack() {
-// 	return (
-// 		<Stack>
-// 			<Stack.Screen name='(authenticated)' options={{ headerShown: false }} />
-// 			<Stack.Screen name='notifications' options={{}} />
-// 		</Stack>
-// 	);
-// }
-
-// function UnAuthenticatedStack() {
-// 	const colorScheme = useColorScheme();
-// 	return <Stack screenOptions={{ headerShown: false }} />;
-// }
-
-// function Router() {
-// 	const { authState } = useAuth();
-// 	console.log(authState);
-// 	return (
-// 		<>
-// 			{authState?.authenticated && authState.token !== null ? (
-// 				<AuthenticatedStack />
-// 			) : (
-// 				<UnAuthenticatedStack />
-// 			)}
-// 		</>
-// 	);
-// }

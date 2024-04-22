@@ -1,25 +1,28 @@
-import {
-	KeyboardAvoidingView,
-	Platform,
-	ScrollView,
-	StyleSheet,
-	TextInput,
-	View,
-	Text,
-} from 'react-native';
+import { ScrollView, StyleSheet, TextInput, View, Text } from 'react-native';
 import { Image } from 'expo-image';
 import {
 	widthPercentageToDP as wp,
 	heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import { StatusBar } from 'expo-status-bar';
-// import { View, Text } from '@/components/Themed';
 import Colors from '@/constants/Colors';
+import { useState } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useForm, Controller } from 'react-hook-form';
+import { Eye, EyeOff } from 'lucide-react-native';
+import { router } from 'expo-router';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function Page() {
+	// State variable to track password visibility
+	const [showPassword, setShowPassword] = useState(false);
+	// Background image source
+	const src = require('@/assets/images/nourri.png');
+
+	// Function to toggle the password visibility state
+	const toggleShowPassword = () => {
+		setShowPassword(!showPassword);
+	};
 	const { handleSignUp } = useAuth();
 
 	type formDataType = {
@@ -27,8 +30,8 @@ export default function Page() {
 		lastName: string;
 		phone: string;
 		email: string;
-		birthDate: string;
-		referralCode: string;
+		password: string;
+		referralCode?: string;
 	};
 
 	const {
@@ -41,23 +44,23 @@ export default function Page() {
 			lastName: '',
 			phone: '',
 			email: '',
-			birthDate: '',
+			password: '',
 			referralCode: '',
 		},
 	});
-	const onSubmit = (data: formDataType) => {
+	const onSubmit = async (data: formDataType) => {
 		console.log('🚀 ~ onSubmit ~ data:', data);
 
-		// console.log('Using Firebase');
-		// handleSignUp(data.email, data.);
+		// TODO: Properly handle user signups
+		await handleSignUp(data);
+		router.replace('/confirmation');
 	};
 
 	return (
 		<ScrollView style={{ flexGrow: 1 }}>
 			<StatusBar style='dark' />
 			<View style={styles.container}>
-				{/* <Image source={src} style={styles.image} /> */}
-				{/* <Text>login</Text> */}
+				<Image source={src} style={styles.image} />
 				<View style={styles.form}>
 					{/* Phone Number */}
 					<View style={{ gap: 10 }}>
@@ -81,30 +84,6 @@ export default function Page() {
 							name='phone'
 						/>
 						{errors.firstName && <Text>This is required.</Text>}
-						{/* <TextInput style={styles.input} placeholder='' /> */}
-					</View>
-					{/* Email */}
-					<View style={{ gap: 10 }}>
-						<Text>
-							Email address <Text style={styles.required}>*</Text>
-						</Text>
-						<Controller
-							control={control}
-							rules={{
-								required: true,
-							}}
-							render={({ field: { onChange, onBlur, value } }) => (
-								<TextInput
-									style={styles.input}
-									placeholder=''
-									onBlur={onBlur}
-									onChangeText={onChange}
-									value={value}
-								/>
-							)}
-							name='email'
-						/>
-						{/* <TextInput style={styles.input} placeholder='' /> */}
 					</View>
 					{/* First & Last Names Container */}
 					<View
@@ -138,20 +117,11 @@ export default function Page() {
 										onBlur={onBlur}
 										onChangeText={onChange}
 										value={value}
+										autoComplete='name-given'
 									/>
 								)}
 								name='firstName'
 							/>
-							{/* <TextInput
-								style={{
-									height: hp('6%'),
-									width: wp('41%'),
-									backgroundColor: Colors.grey,
-									borderRadius: 15,
-									paddingHorizontal: 10,
-								}}
-								placeholder=''
-							/> */}
 						</View>
 						{/* Last Name */}
 						<View style={{ gap: 5 }}>
@@ -176,29 +146,22 @@ export default function Page() {
 										onBlur={onBlur}
 										onChangeText={onChange}
 										value={value}
+										autoComplete='name-family'
 									/>
 								)}
 								name='lastName'
 							/>
-							{/* <TextInput
-								style={{
-									height: hp('6%'),
-									width: wp('41%'),
-									backgroundColor: Colors.grey,
-									borderRadius: 15,
-									paddingHorizontal: 10,
-								}}
-								placeholder=''
-							/> */}
 						</View>
 					</View>
-					{/* BirthDate */}
-					<View style={{ gap: 5 }}>
-						<Text>Birthdate</Text>
+					{/* Email */}
+					<View style={{ gap: 10 }}>
+						<Text>
+							Email address <Text style={styles.required}>*</Text>
+						</Text>
 						<Controller
 							control={control}
 							rules={{
-								required: false,
+								required: true,
 							}}
 							render={({ field: { onChange, onBlur, value } }) => (
 								<TextInput
@@ -207,11 +170,60 @@ export default function Page() {
 									onBlur={onBlur}
 									onChangeText={onChange}
 									value={value}
+									autoComplete='email'
 								/>
 							)}
-							name='birthDate'
+							name='email'
 						/>
-						{/* <TextInput style={styles.input} placeholder='enter birth date' /> */}
+					</View>
+					{/* Password */}
+					<View
+						style={{
+							gap: 5,
+						}}
+					>
+						<Text>Password</Text>
+						<View
+							style={{
+								flexDirection: 'row',
+								alignItems: 'center',
+								justifyContent: 'center',
+							}}
+						>
+							<Controller
+								control={control}
+								rules={{
+									required: false,
+								}}
+								render={({ field: { onChange, onBlur, value } }) => (
+									<TextInput
+										// Set secureTextEntry prop to hide
+										//password when showPassword is false
+										secureTextEntry={!showPassword}
+										style={styles.input}
+										placeholder=''
+										onBlur={onBlur}
+										onChangeText={onChange}
+										value={value}
+										autoComplete='new-password'
+									/>
+								)}
+								name='password'
+							/>
+							{showPassword ? (
+								<EyeOff
+									style={styles.passwordIcon}
+									color={Colors.secondary}
+									onPress={toggleShowPassword}
+								/>
+							) : (
+								<Eye
+									style={styles.passwordIcon}
+									color={Colors.secondary}
+									onPress={toggleShowPassword}
+								/>
+							)}
+						</View>
 					</View>
 
 					{/* Referral Code */}
@@ -261,10 +273,11 @@ const styles = StyleSheet.create({
 		marginTop: 130,
 	},
 	image: {
-		width: 400,
-		height: 400,
+		width: 144,
+		height: 40,
 		marginRight: 20,
-		marginTop: 30,
+		marginTop: -30,
+		marginBottom: 30,
 	},
 	form: {
 		borderWidth: 0.5,
@@ -299,5 +312,9 @@ const styles = StyleSheet.create({
 	},
 	label: {
 		alignSelf: 'flex-start',
+	},
+	passwordIcon: {
+		position: 'absolute',
+		right: 10,
 	},
 });
