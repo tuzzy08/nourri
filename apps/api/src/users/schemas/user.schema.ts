@@ -5,6 +5,11 @@ import { Meal } from 'src/vendors/schemas/meal.schema';
 
 export type UserDocument = HydratedDocument<User>;
 
+enum LoginMethod {
+  SOCIAL = 'SOCIAL',
+  PHONE = 'PHONE',
+}
+
 @Schema()
 export class User {
   @Prop()
@@ -22,23 +27,28 @@ export class User {
   @Prop()
   birthDate: Date;
 
-  @Prop()
+  @Prop({ required: false })
   referralCode: string;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Order',
+    required: false,
   })
   orders: Order[];
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Meal',
+    required: false,
   })
   favorites: Meal[];
 
   @Prop({ default: Date.now() })
   createdAt: Date;
+
+  @Prop({ required: false })
+  loginMethod: LoginMethod;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

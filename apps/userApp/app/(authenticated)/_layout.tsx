@@ -16,14 +16,14 @@ import { StatusBar } from 'expo-status-bar';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function TabLayout() {
-	return <Redirect href='/login' />;
+	// return <Redirect href='/login' />;
 	const { authState } = useAuth();
 	console.log('🚀 ~ TabLayout ~ authState:', authState);
 
 	// * Check if the user is authenticated
-	if (authState!.authenticated !== true || authState!.token === null) {
-		return <Redirect href='/login' />;
-	}
+	// if (authState!.authenticated !== true || authState!.token === null) {
+	// 	return <Redirect href='/login' />;
+	// }
 	const colorScheme = useColorScheme();
 	const segment = useSegments();
 	// get the current page from the segment

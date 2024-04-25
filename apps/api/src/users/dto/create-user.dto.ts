@@ -15,4 +15,7 @@ export class CreateUserDto {
 
   @ApiProperty()
   birthDate: Date;
+
+  @ApiProperty({ required: false })
+  referralCode: string;
 }

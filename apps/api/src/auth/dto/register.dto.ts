@@ -15,4 +15,7 @@ export class RegisterDto {
 
   @ApiProperty()
   birthDate: Date;
+
+  @ApiProperty({ required: false })
+  referralCode: string;
 }
