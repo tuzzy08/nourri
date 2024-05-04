@@ -8,8 +8,14 @@ export class Vendor {
   @Prop({ required: false })
   vendorId: mongoose.Schema.Types.ObjectId;
 
+  @Prop({ required: false })
+  payout_bank_name: string;
+
+  @Prop({ required: false })
+  payout_account_number: string;
+
   @Prop()
-  title: string;
+  name: string;
 
   @Prop()
   logo_url: string;

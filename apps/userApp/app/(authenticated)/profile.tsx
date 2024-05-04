@@ -1,12 +1,7 @@
-import {
-	Pressable,
-	ScrollView,
-	StyleSheet,
-	TouchableOpacity,
-	useColorScheme,
-} from 'react-native';
+import { StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { SafeAreaView } from 'react-native';
+import { router } from 'expo-router';
 import {
 	Wallet,
 	Hammer,
@@ -52,32 +47,38 @@ function ProfileOptions() {
 		{
 			icon: <Wallet color={color} />,
 			title: 'My Wallet',
+			href: '/(nonTabs)/wallet',
 		},
 		{
 			icon: <Hammer color={color} />,
 			title: 'Manage Profile',
+			href: '/(nonTabs)/manageProfile',
 		},
 		{
 			icon: <Tag color={color} />,
-			title: 'Promocodes',
+			title: 'Promo codes',
+			href: '/(nonTabs)/promocodes',
 		},
 		{
 			icon: <CircleHelp color={color} />,
 			title: 'F.A.Q.',
+			href: '/faq',
 		},
 		{
 			icon: <MessageCircleQuestion color={color} />,
 			title: 'Support',
+			href: '/(nonTabs)/support',
 		},
 		{
 			icon: <LogOut color={color} />,
 			title: 'Log out',
+			href: '',
 		},
 	];
 	return (
 		<View style={styles.profileOptionsContainer}>
-			{items.map((item) => (
-				<Option item={item} />
+			{items.map((item, index) => (
+				<Option item={item} key={index.toString()} />
 			))}
 		</View>
 	);
@@ -86,11 +87,14 @@ function ProfileOptions() {
 function Option({
 	item,
 }: {
-	item: { icon: React.JSX.Element; title: string };
+	item: { icon: React.JSX.Element; title: string; href: any };
 }) {
 	const colorScheme = useColorScheme();
 	return (
-		<TouchableOpacity style={styles.option}>
+		<TouchableOpacity
+			style={styles.option}
+			onPress={() => router.navigate(item.href)}
+		>
 			<View style={{ flexDirection: 'row', gap: 20 }}>
 				<View>{item.icon}</View>
 				<View>

@@ -13,6 +13,10 @@ export default function Layout() {
 			<Stack>
 				<Stack.Screen name='mapPage' options={{ headerShown: false }} />
 				<Stack.Screen name='notifications' options={{}} />
+				<Stack.Screen
+					name='wallet'
+					options={{ headerTitle: '', headerBackTitle: 'back' }}
+				/>
 			</Stack>
 		</ThemeProvider>
 	);

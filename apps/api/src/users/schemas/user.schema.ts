@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 import { Order } from 'src/orders/schemas/order.schema';
-import { Meal } from 'src/vendors/schemas/item.schema';
+import { Item } from 'src/vendors/schemas/item.schema';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -25,6 +25,12 @@ export class User {
   phone: string;
 
   @Prop()
+  wallet_account_bank: string;
+
+  @Prop()
+  wallet_account_no: string;
+
+  @Prop()
   birthDate: Date;
 
   @Prop({ required: false })
@@ -39,10 +45,10 @@ export class User {
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Meal',
+    ref: 'Item',
     required: false,
   })
-  favorites: Meal[];
+  favorites: Item[];
 
   @Prop({ default: Date.now() })
   createdAt: Date;
