@@ -1,42 +1,34 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query } from '@nestjs/common';
 import { VendorsService } from './vendors.service';
 import { CreateVendorDto } from './dto/create-vendor.dto';
-import { UpdateVendorDto } from './dto/update-vendor.dto';
+import mongoose from 'mongoose';
+
+type GeoLocation = {
+  lat: number;
+  long: number;
+};
 
 @Controller('vendors')
 export class VendorsController {
   constructor(private readonly vendorsService: VendorsService) {}
 
   @Post()
-  create(@Body() createVendorDto: CreateVendorDto) {
-    return this.vendorsService.create(createVendorDto);
+  createVendor(@Body() createVendorDto: CreateVendorDto) {
+    return this.vendorsService.createVendor(createVendorDto);
   }
 
-  @Get()
-  findAll() {
-    return this.vendorsService.findAll();
+  @Get('closest')
+  getClosestVendorsToUser(@Query() coordinates: GeoLocation) {
+    return this.vendorsService.getClosestVendorsToUser(coordinates);
+  }
+
+  @Get('all')
+  getAllVendors() {
+    return this.vendorsService.getAllVendors();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.vendorsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateVendorDto: UpdateVendorDto) {
-    return this.vendorsService.update(+id, updateVendorDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.vendorsService.remove(+id);
+  getVendorbyVendorId(@Param('id') id: mongoose.Schema.Types.ObjectId) {
+    return this.vendorsService.getVendorbyVendorId(id);
   }
 }
