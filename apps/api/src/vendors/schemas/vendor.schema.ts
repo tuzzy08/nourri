@@ -6,30 +6,27 @@ export type VendorDocument = HydratedDocument<Vendor>;
 @Schema()
 export class Vendor {
   @Prop({ required: false })
-  vendorId: mongoose.Schema.Types.ObjectId;
-
-  @Prop({ required: false })
   payout_bank_name: string;
 
-  @Prop({ required: false })
+  @Prop({ required: false, unique: true })
   payout_account_number: string;
 
-  @Prop()
+  @Prop({ unique: true })
   name: string;
 
-  @Prop()
+  @Prop({ unique: true })
   logo_url: string;
 
-  @Prop({ required: false })
+  @Prop({ required: false, unique: true })
   email: string;
 
-  @Prop()
+  @Prop({ unique: true })
   contact_phone: string;
 
-  @Prop()
+  @Prop({ unique: true })
   address: string;
 
-  @Prop()
+  @Prop({ unique: true })
   geo_location: {
     latitude: number;
     longitude: number;
@@ -56,7 +53,7 @@ export class Category {
   @Prop()
   vendorId: { type: mongoose.Schema.Types.ObjectId; ref: 'Vendor' };
 
-  @Prop()
+  @Prop({ required: false })
   items: [{ type: mongoose.Schema.Types.ObjectId; ref: 'Item' }];
 }
 
