@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
+import { Category, Vendor } from './vendor.schema';
 
 export type ItemDocument = HydratedDocument<Item>;
 
@@ -23,11 +24,11 @@ export class Item {
   @Prop()
   cooKTime: string;
 
-  @Prop()
-  category: { type: mongoose.Schema.Types.ObjectId; ref: 'Category' };
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Category' })
+  category: Category;
 
-  @Prop()
-  vendorId: { type: mongoose.Schema.Types.ObjectId; ref: 'Vendor' };
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' })
+  vendorId: Vendor;
 }
 
 export const ItemSchema = SchemaFactory.createForClass(Item);

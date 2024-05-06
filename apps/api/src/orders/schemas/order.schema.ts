@@ -1,13 +1,17 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
-import { Meal } from 'src/vendors/schemas/item.schema';
+import { Item } from 'src/vendors/schemas/item.schema';
 
 export type OrderDocument = HydratedDocument<Order>;
 
 enum OrderStatus {
   UNPAID = 'UNPAID',
-  PAYMENT_CONFORMED = 'PAYMENT_CONFORMED',
+  CANCELED = 'CANCELED',
+  AWAITING_VENDOR_CONFIRMATION = 'AWAITING_VENDOR_CONFIRMATION',
+  AWAITING_RIDER_CONFIRMATION = 'AWAITING_RIDER_CONFIRMATION',
+  PAYMENT_CONFIRMED = 'PAYMENT_CONFIRMED',
   DELIVERY_UNASSIGNED = 'DELIVERY_UNASSIGNED',
+  DELIVERY_ASSIGNED = 'DELIVERY_ASSIGNED',
   DELIVERY_ENROUTE = 'DELIVERY_ENROUTE',
   DELIVERED = 'DELIVERED',
 }
@@ -18,11 +22,9 @@ export class Order {
   orderNo: string;
 
   @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'MealItem',
     required: true,
   })
-  items: Meal[];
+  items: Item[];
 
   @Prop({ required: true })
   totalAmount: number;
@@ -30,7 +32,7 @@ export class Order {
   @Prop({ default: Date.now() })
   timeStamp: Date;
 
-  @Prop()
+  @Prop({ required: false })
   riderId: mongoose.Schema.Types.ObjectId;
 
   @Prop({ required: true })

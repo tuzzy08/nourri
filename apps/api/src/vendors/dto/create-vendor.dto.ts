@@ -21,4 +21,10 @@ export class CreateVendorDto {
 
   @ApiProperty()
   payout_account_number: string;
+
+  @ApiProperty()
+  _geoloc: {
+    lat: number;
+    lng: number;
+  };
 }

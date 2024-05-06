@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
+import { Item } from './item.schema';
 
 export type VendorDocument = HydratedDocument<Vendor>;
 
@@ -11,7 +12,7 @@ export class Vendor {
   @Prop({ required: false, unique: true })
   payout_account_number: string;
 
-  @Prop({ unique: true })
+  @Prop()
   name: string;
 
   @Prop({ unique: true })
@@ -26,17 +27,24 @@ export class Vendor {
   @Prop({ unique: true })
   address: string;
 
-  @Prop({ unique: true })
-  geo_location: {
-    latitude: number;
-    longitude: number;
+  @Prop({
+    type: {
+      lat: { type: Number },
+      lng: { type: Number },
+    },
+    required: true,
+    unique: true,
+  })
+  _geoloc: {
+    lat: number;
+    lng: number;
   };
 
   @Prop()
   categories: [Category];
 
-  @Prop()
-  items: [{ type: mongoose.Schema.Types.ObjectId; ref: 'Item' }];
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Item' }] })
+  items: Item[];
 
   @Prop({ default: false })
   isVerified: boolean;
@@ -50,10 +58,10 @@ export class Category {
   @Prop()
   name: string;
 
-  @Prop()
-  vendorId: { type: mongoose.Schema.Types.ObjectId; ref: 'Vendor' };
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' })
+  vendorId: Vendor;
 
-  @Prop({ required: false })
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Item' }] })
   items: [{ type: mongoose.Schema.Types.ObjectId; ref: 'Item' }];
 }
 

@@ -6,6 +6,7 @@ import { Item } from './schemas/item.schema';
 import { Category, Vendor } from './schemas/vendor.schema';
 import mongoose, { Model } from 'mongoose';
 import { CreateItemDto } from './dto/create-item.dto';
+// import cloudinary from '../../lib/cloudinary';
 
 type GeoLocation = {
   lat: number;
