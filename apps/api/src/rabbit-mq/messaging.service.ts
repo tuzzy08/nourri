@@ -12,7 +12,9 @@ export class MessagingService {
     queueOptions: { channel: 'order-channel' },
   })
   public async handleOrderMessage(message: any) {
-    console.log(`Received order message: ${JSON.stringify(message)}`);
+    console.log(
+      `Received order message from queue: ${JSON.stringify(message)}`,
+    );
   }
 
   @RabbitSubscribe({

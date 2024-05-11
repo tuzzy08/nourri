@@ -14,6 +14,12 @@ export class CreateOrderDto {
   @ApiProperty()
   order_id: mongoose.Schema.Types.ObjectId;
 
+  @ApiProperty({ required: false })
+  root_order_id: mongoose.Schema.Types.ObjectId;
+
+  @ApiProperty({ required: false })
+  root_vendor_id: mongoose.Schema.Types.ObjectId;
+
   @ApiProperty()
   items: mongoose.Schema.Types.ObjectId[];
 

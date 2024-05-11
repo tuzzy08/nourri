@@ -8,6 +8,8 @@ import { VendorsModule } from './vendors/vendors.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CacheModule } from '@nestjs/cache-manager';
 import { RabbitMqModule } from './rabbit-mq/rabbit-mq.module';
+import { EventsModule } from './gateways/events.module';
+// import { EventsGateway } from './gateways/events.gateway';
 
 @Module({
   imports: [
@@ -15,16 +17,6 @@ import { RabbitMqModule } from './rabbit-mq/rabbit-mq.module';
       isGlobal: true,
     }),
     RabbitMqModule,
-    // RabbitMQModule.forRoot(RabbitMQModule, {
-    //   exchanges: [
-    //     {
-    //       name: 'exchange1',
-    //       type: 'topic',
-    //     },
-    //   ],
-    //   uri: process.env.AMQP_URL,
-    //   connectionInitOptions: { wait: false },
-    // }),
     MongooseModule.forRoot(process.env.MONGODB_ATLAS_URL),
     CacheModule.register({
       ttl: 300000,
@@ -32,6 +24,7 @@ import { RabbitMqModule } from './rabbit-mq/rabbit-mq.module';
     }),
     UsersModule,
     AuthModule,
+    EventsModule,
     OrdersModule,
     VendorsModule,
   ],
