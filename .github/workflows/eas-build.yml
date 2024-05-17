@@ -35,4 +35,4 @@ jobs:
           echo $(jq '.expo.runtimeVersion.policy = "sdkVersion"' app.json) > app.json
       - name: Build on EAS
         working-directory: apps/userApp
-        run: eas build --platform all --non-interactive --no-wait
+        run: eas build --platform android --non-interactive --no-wait
