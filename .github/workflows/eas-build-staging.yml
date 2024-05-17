@@ -3,10 +3,10 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - production
+      - staging
     paths:
       - 'apps/userApp/**'
-      - '.github/workflows/eas-build.yml'
+      - '.github/workflows/eas-build-staging.yml'
 
 jobs:
   build:
@@ -35,4 +35,4 @@ jobs:
           echo $(jq '.expo.runtimeVersion.policy = "sdkVersion"' app.json) > app.json
       - name: Build on EAS
         working-directory: apps/userApp
-        run: eas build --platform android --non-interactive --no-wait
+        run: eas build --profile preview --platform android --non-interactive --no-wait
