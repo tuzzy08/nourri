@@ -24,6 +24,7 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
       - name: Install dependencies
+        working-directory: apps/userApp
         run: npm ci
       - name: 👷 Configure project
         env:
@@ -33,4 +34,5 @@ jobs:
           eas init --id "$EXPO_NOURRI_USER_APP_PROJECT_ID" --force --non-interactive
           echo $(jq '.expo.runtimeVersion.policy = "sdkVersion"' app.json) > app.json
       - name: Build on EAS
+        working-directory: apps/userApp
         run: eas build --platform all --non-interactive --no-wait
